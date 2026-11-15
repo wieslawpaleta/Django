@@ -1,0 +1,18 @@
+<!DOCTYPE html> <!-- Declares the document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
+<html lang="en"> <!-- Opens the HTML root element with English language attribute (Otwiera główny element HTML z atrybutem języka angielskiego) -->
+<head>
+    <meta charset="UTF-8"> <!-- Sets character encoding to UTF-8 for special characters (Ustawia kodowanie znaków na UTF-8 dla znaków specjalnych) -->
+    <title>LinguaCards - Vocabulary List</title> <!-- Sets the title of the webpage shown in the browser tab (Ustawia tytuł strony internetowej widoczny w karcie przeglądarki) -->
+</head>
+<body>
+    <h1>My Flashcards</h1> <!-- Main heading of the webpage (Główny nagłówek strony internetowej) -->
+    
+    <ul> <!-- Opens an unordered list container (Otwiera kontener listy wypunktowanej) -->
+        {% for word in words %} <!-- Django template loop that iterates over each word in the words list (Pętla szablonu Django, która iteruje po każdym słowie z listy words) -->
+            <li><strong>{{ word.foreign_word }}</strong> - {{ word.translation }} ({{ word.language }})</li> <!-- List item displaying foreign word, translation, and language (Element listy wyświetlający obce słowo, tłumaczenie i język) -->
+        {% empty %} <!-- Fallback block if the words list is empty (Blok zastępczy, jeśli lista słów jest pusta) -->
+            <p>No words added yet. Go to admin to add some!</p> <!-- Message displayed when no words exist in database (Komunikat wyświetlany, gdy w bazie danych nie ma żadnych słów) -->
+        {% endfor %} <!-- Closes the Django template for loop (Zamyka pętlę for szablonu Django) -->
+    </ul> <!-- Closes the unordered list (Zamyka listę wypunktowaną) -->
+</body>
+</html> <!-- Closes the HTML document (Zamyka dokument HTML) -->

@@ -1,0 +1,20 @@
+from django.shortcuts import render, redirect  # Imports render for templates and redirect to send users to another page after saving (Importuje render do szablonów oraz redirect do wysyłania użytkowników na inną stronę po zapisaniu)
+from .models import Word  # Imports the Word model (Importuje model Word)
+from .forms import WordForm  # Imports our newly created WordForm class (Importuje naszą nowo utworzoną klasę WordForm)
+
+def word_list(view_request):  # Defines the existing word list view function (Definiuje istniejącą funkcję widoku listy słówek)
+    all_words = Word.objects.all()  # Queries database for all words (Odpytuje bazę danych o wszystkie słówka)
+    context_dictionary = {'words': all_words}  # Packs words into context dictionary (Pakuje słówka do słownika kontekstu)
+    return render(view_request, 'vocabulary/word_list.html', context_dictionary)  # Renders the word list template (Renderuje szablon listy słówek)
+
+def add_word(view_request):  # Defines a new view function named add_word to handle creating a new flashcard (Definiuje nową funkcję widoku o nazwie add_word do obsługi tworzenia nowej fiszki)
+    if view_request.method == 'POST':  # Checks if the browser sent data via HTTP POST (user submitted the form) (Sprawdza, czy przeglądarka wysłała dane metodą HTTP POST - użytkownik przesłał formularz)
+        form = WordForm(view_request.POST)  # Creates a form instance filled with the data submitted by the user (Tworzy instancję formularza wypełnioną danymi przesłanymi przez użytkownika)
+        if form.is_valid():  # Checks if all submitted data passes validation checks (Sprawdza, czy wszystkie przesłane dane przechodzą testy walidacji)
+            form.save()  # Saves the new word directly into the database table (Zapisuje nowe słowo bezpośrednio w tabeli bazy danych)
+            return redirect('word_list')  # Redirects the user back to the main word list page (Przekierowuje użytkownika z powrotem do głównej strony listy słówek)
+    else:  # Executes if the request method is GET (the user just opened the empty form page) (Wykonuje się, jeśli metodą żądania jest GET - użytkownik właśnie otworzył stronę pustego formularza)
+        form = WordForm()  # Creates a blank, empty form instance (Tworzy czystą, pustą instancję formularza)
+    
+    context_dictionary = {'form': form}  # Packs the form into a context dictionary (Pakuje formularz do słownika kontekstu)
+    return render(view_request, 'vocabulary/word_form.html', context_dictionary)  # Renders the HTML template containing the form and returns it (Renderuje szablon HTML zawierający formularz i go zwraca)
