@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register [Rejestracja]</title>
+</head>
+<body>
+    <h2>Register for Math Quiz [Zarejestruj się do Quizu Matematycznego]</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up [Zarejestruj się]</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Log in here [Zaloguj się tutaj]</a>.</p>
+</body>
+</html>
