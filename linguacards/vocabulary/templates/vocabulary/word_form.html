@@ -2,19 +2,19 @@
 <html lang="en"> <!-- Opens HTML root element with English language attribute (Otwiera główny element HTML z atrybutem języka angielskiego) -->
 <head>
     <meta charset="UTF-8"> <!-- Sets character encoding to UTF-8 (Ustawia kodowanie znaków na UTF-8) -->
-    <title>Add New Word</title> <!-- sets browser tab title (Ustawia tytuł karty przeglądarki) -->   
-</head>  
+    <title>Add New Word</title> <!-- Sets browser tab title (Ustawia tytuł karty przeglądarki) -->
+</head>
 <body>
     <h1>Add a New Flashcard</h1> <!-- Main heading of the page (Główny nagłówek strony) -->
-
+    
     <form method="POST"> <!-- Opens an HTML form that sends data using the POST method (Otwiera formularz HTML, który wysyła dane metodą POST) -->
-        {% csrf_toke %} <!-- Security token required by Django for all POST forms to prevent cross-site request forgery attacks (Token bezpieczeństwa wymagany przez Django dla wszystkich formularzy POST w celu zapobiegania atakom fałszowania żądań międzywitrynowych) -->
+        {% csrf_token %} <!-- Security token required by Django for all POST forms to prevent cross-site request forgery attacks (Token bezpieczeństwa wymagany przez Django dla wszystkich formularzy POST w celu zapobiegania atakom fałszowania żądań międzywitrynowych) -->
         {{ form.as_p }} <!-- Renders all form fields automatically wrapped inside HTML paragraph tags (Renderuje wszystkie pola formularza automatycznie owinięte w znaczniki akapitu HTML) -->
-        <button type="sumbit">Save Word</button> <!-- Submit button that sends the filled form data to the server (Przycisk wysyłania, który wysyła wypełnione dane formularza do serwera) -->   
+        <button type="submit">Save Word</button> <!-- Submit button that sends the filled form data to the server (Przycisk wysyłania, który wysyła wypełnione dane formularza do serwera) -->
     </form> <!-- Closes the HTML form element (Zamyka element formularza HTML) -->
-
+    
     <br> <!-- Inserts a vertical line break space (Wstawia pionowy odstęp łamania linii) -->
-</body>  
-
+    <a href="{% url 'word_list' %}">Back to List</a> <!-- Link that dynamically generates URL back to the main word list page (Link, który dynamicznie generuje adres URL z powrotem do głównej strony listy słówek) -->
+</body>
 
 </html>
