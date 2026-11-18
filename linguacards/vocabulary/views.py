@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect  # Imports render for templates and redirect to send users to another page after saving (Importuje render do szablonów oraz redirect do wysyłania użytkowników na inną stronę po zapisaniu)
+from django.shortcuts import render, redirect, get_object_or_404  # Imports render for templates and redirect to send users to another page after saving (Importuje render do szablonów oraz redirect do wysyłania użytkowników na inną stronę po zapisaniu)
 from .models import Word  # Imports the Word model (Importuje model Word)
 from .forms import WordForm  # Imports our newly created WordForm class (Importuje naszą nowo utworzoną klasę WordForm)
 
@@ -18,3 +18,9 @@ def add_word(view_request):  # Defines a new view function named add_word to han
     
     context_dictionary = {'form': form}  # Packs the form into a context dictionary (Pakuje formularz do słownika kontekstu)
     return render(view_request, 'vocabulary/word_form.html', context_dictionary)  # Renders the HTML template containing the form and returns it (Renderuje szablon HTML zawierający formularz i go zwraca)
+
+def update_word(view_request, word_pk): # Defines a view function to edit a word, taking its unique ID (pk) as an argument (Definiuje funkcję widoku do edycji słówka, przyjmując jego unikalne ID (pk) jako argument)
+    word_item = get_object_or_404(Word, pk=word_pk) # Fetches the specific word by primary key or shows 404 error page if missing (Pobiera konkretne słowo po kluczu głównym lub pokazuje stronę błędu 404, jeśli go brakuje)
+    if view_request.method == 'POST': # Checks if the user submitted updated data (Sprawdza, czy użytkownik przesłał zaktualizowane dane)
+        form = WordForm(view_request.POST, instance=word_item) # Creates form with submitted data attached to the existing word instance (Tworzy formularz z przesłanymi danymi przypisanymi do istniejącej instancji słówka)
+        if form.is_valid(): # Checks if the updated data is valid (Sprawdza, czy )
