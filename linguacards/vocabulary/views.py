@@ -19,8 +19,24 @@ def add_word(view_request):  # Defines a new view function named add_word to han
     context_dictionary = {'form': form}  # Packs the form into a context dictionary (Pakuje formularz do słownika kontekstu)
     return render(view_request, 'vocabulary/word_form.html', context_dictionary)  # Renders the HTML template containing the form and returns it (Renderuje szablon HTML zawierający formularz i go zwraca)
 
-def update_word(view_request, word_pk): # Defines a view function to edit a word, taking its unique ID (pk) as an argument (Definiuje funkcję widoku do edycji słówka, przyjmując jego unikalne ID (pk) jako argument)
-    word_item = get_object_or_404(Word, pk=word_pk) # Fetches the specific word by primary key or shows 404 error page if missing (Pobiera konkretne słowo po kluczu głównym lub pokazuje stronę błędu 404, jeśli go brakuje)
-    if view_request.method == 'POST': # Checks if the user submitted updated data (Sprawdza, czy użytkownik przesłał zaktualizowane dane)
-        form = WordForm(view_request.POST, instance=word_item) # Creates form with submitted data attached to the existing word instance (Tworzy formularz z przesłanymi danymi przypisanymi do istniejącej instancji słówka)
-        if form.is_valid(): # Checks if the updated data is valid (Sprawdza, czy )
+def update_word(view_request, word_pk):  # Defines a view function to edit a word, taking its unique ID (pk) as an argument (Definiuje funkcję widoku do edycji słówka, przyjmując jego unikalne ID (pk) jako argument)
+    word_item = get_object_or_404(Word, pk=word_pk)  # Fetches the specific word by primary key or shows 404 error page if missing (Pobiera konkretne słowo po kluczu głównym lub pokazuje stronę błędu 404, jeśli go brakuje)
+    if view_request.method == 'POST':  # Checks if the user submitted updated data (Sprawdza, czy użytkownik przesłał zaktualizowane dane)
+        form = WordForm(view_request.POST, instance=word_item)  # Creates form with submitted data attached to the existing word instance (Tworzy formularz z przesłanymi danymi przypisanymi do istniejącej instancji słówka)
+        if form.is_valid():  # Checks if the updated data is valid (Sprawdza, czy zaktualizowane dane są poprawne)
+            form.save()  # Overwrites and saves changes to the database record (Nadpisuje i zapisuje zmiany w rekordu bazy danych)
+            return redirect('word_list')  # Redirects back to the main word list page (Przekierowuje z powrotem do głównej strony listy słówek)
+    else:
+        form = WordForm(instance=word_item)  # Creates form pre-filled with the existing word's data for editing (Tworzy formularz wstępnie wypełniony danymi istniejącego słówka do edycji)
+    
+    context_dictionary = {'form': form, 'word': word_item}  # Packs form and word item into context dictionary (Pakuje formularz i element słówka do słownika kontekstu)
+    return render(view_request, 'vocabulary/word_form.html', context_dictionary)  # Renders the shared form template (Renderuje współdzielony szablon formularza)
+
+def delete_word(view_request, word_pk):  # Defines a view function to delete a word using its primary key (Definiuje funkcję widoku do usuwania słówka za pomocą jego klucza głównego)
+    word_item = get_object_or_404(Word, pk=word_pk)  # Fetches the word or returns 404 error (Pobiera słówko lub zwraca błąd 404)
+    if view_request.method == 'POST':  # Checks if the user confirmed deletion by submitting the confirmation form (Sprawdza, czy użytkownik potwierdził usunięcie, wysyłając formularz potwierdzenia)
+        word_item.delete()  # Deletes this specific record from the database table (Usuwa ten konkretny rekord z tabeli bazy danych)
+        return redirect('word_list')  # Redirects back to the word list page (Przekierowuje z powrotem do strony listy słówek)
+    
+    context_dictionary = {'word': word_item}  # Packs word item into context for confirmation display (Pakuje element słówka do kontekstu w celu wyświetlenia potwierdzenia)
+    return render(view_request, 'vocabulary/word_confirm_delete.html', context_dictionary)  # Renders the delete confirmation HTML template (Renderuje szablon HTML potwierdzenia usunięcia)
