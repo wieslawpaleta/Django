@@ -1,7 +1,9 @@
-from django.urls import path  # Imports the path function (Importuje funkcję path)
-from .views import word_list, add_word  # Imports both word_list and add_word view functions from views.py (Importuje obie funkcje widoków word_list i add_word z pliku views.py)
+from django.urls import path  # Imports path function (Importuje funkcję path)
+from .views import word_list, add_word, update_word, delete_word  # Imports all view functions (Importuje wszystkie funkcje widoków)
 
 urlpatterns = [  # Defines URL routing list (Definiuje listę routingu URL)
-    path('', word_list, name='word_list'),  # Maps the root URL to the word_list view (Mapuje główny adres URL na widok word_list)
-    path('add/', add_word, name='add_word'),  # Maps the '/add/' URL path to our add_word view, naming it add_word (Mapuje ścieżkę URL '/add/' do naszego widoku add_word, nadając jej nazwę add_word)
+    path('', word_list, name='word_list'),  # Route for main word list page (Ścieżka dla głównej strony listy słówek)
+    path('add/', add_word, name='add_word'),  # Route for adding a new word (Ścieżka do dodawania nowego słówka)
+    path('update/<int:word_pk>/', update_word, name='update_word'),  # Route for editing a specific word using its integer ID (Ścieżka do edycji konkretnego słówka za pomocą jego ID całkowitego)
+    path('delete/<int:word_pk>/', delete_word, name='delete_word'),  # Route for deleting a specific word using its integer ID (Ścieżka do usuwania konkretnego słówka za pomocą jego ID całkowitego)
 ]

@@ -12,8 +12,10 @@
 
     <ul> <!-- Opens an unordered list container (Otwiera kontener listy wypunktowanej) -->
         {% for word in words %} <!-- Django template loop that iterates over each word in the words list (Pętla szablonu Django, która iteruje po każdym słowie z listy words) -->
-            <li><strong>{{ word.foreign_word }}</strong> - {{ word.translation }} ({{ word.language }})</li> <!-- List item displaying foreign word, translation, and language (Element listy wyświetlający obce słowo, tłumaczenie i język) -->
-        {% empty %} <!-- Fallback block if the words list is empty (Blok zastępczy, jeśli lista słów jest pusta) -->
+            <li>
+                <strong>{{ word.foreign_word }}</strong> - {{ word.translation }} ({{ word.language }})</li> <!-- List item displaying foreign word, translation, and language (Element listy wyświetlający obce słowo, tłumaczenie i język) -->
+                <a href="{% url 'update_word' word.pk %}">Edit</a> <!-- Link pointing to update view for this specific word using its primary key (Link wskazujący na widok aktualizacji dla tego konkretnego słówka przy użyciu jego klucza głównego) --> 
+                <a href="{% url 'delete_word' word.pk %}" style="color: red;">Delete</a> <!-- Link pointing to delete confirmation view for this specific word (Link wskazujący na widok potwierdzenia usunięcia dla tego konkretnego słówka) -->       {% empty %} <!-- Fallback block if the words list is empty (Blok zastępczy, jeśli lista słów jest pusta) -->
             <p>No words added yet. Go to admin to add some!</p> <!-- Message displayed when no words exist in database (Komunikat wyświetlany, gdy w bazie danych nie ma żadnych słów) -->
         {% endfor %} <!-- Closes the Django template for loop (Zamyka pętlę for szablonu Django) -->
     </ul> <!-- Closes the unordered list (Zamyka listę wypunktowaną) -->

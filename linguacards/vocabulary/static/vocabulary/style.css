@@ -1,0 +1,4 @@
+* { /* Targets every HTML element on the page to reset default spacing (Wybiera każdy element HTML na stronie, aby zresetować domyślne odstępy */
+    box-sizing: border-box;
+    
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html> <!-- Declares document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
+<html lang="en"> <!-- Opens HTML root element (Otwiera główny element HTML) -->
+<head>
+    <meta charset="UTF-8"> <!-- Sets UTF-8 character encoding (Ustawia kodowanie znaków UTF-8) -->
+    <title>Delete Word</title> <!-- Sets browser tab title (Ustawia tytuł karty przeglądarki) -->
+</head>
+<body>
+    <h1>Confirm Deletion</h1> <!-- Main heading of the page (Główny nagłówek strony) -->
+    
+    <p>Are you sure you want to delete the word: <strong>{{ word.foreign_word }} - {{ word.translation }}</strong>?</p> <!-- Text asking for confirmation and showing word details (Tekst prośby o potwierdzenie i pokazujący szczegóły słówka) -->
+    
+    <form method="POST"> <!-- Opens HTML form to send POST request to delete (Otwiera formularz HTML do wysłania żądania POST w celu usunięcia) -->
+        {% csrf_token %} <!-- Django security token against CSRF attacks (Token bezpieczeństwa Django przed atakami CSRF) -->
+        <button type="submit" style="color: red;">Yes, Delete</button> <!-- Submit button that confirms deletion (Przycisk wysyłania potwierdzający usunięcie) -->
+    </form> <!-- Closes the form (Zamyka formularz) -->
+    
+    <br> <!-- Inserts vertical spacing (Wstawia odstęp pionowy) -->
+    <a href="{% url 'word_list' %}">Cancel</a> <!-- Link to cancel and return to the main list (Link do anulowania i powrotu do głównej listy) -->
+</body>
+</html> <!-- Closes HTML document (Zamyka dokument HTML) -->
