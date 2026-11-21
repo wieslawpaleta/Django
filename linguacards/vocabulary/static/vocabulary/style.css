@@ -1,4 +1,113 @@
-* { /* Targets every HTML element on the page to reset default spacing (Wybiera każdy element HTML na stronie, aby zresetować domyślne odstępy */
-    box-sizing: border-box;
-    
+* { /* Targets every HTML element on the page to reset default spacing (Wybiera każdy element HTML na stronie, aby zresetować domyślne odstępy) */
+    box-sizing: border-box; /* Includes padding and border inside the element's total width and height (Wlicza padding i obramowanie w całkowitą szerokość i wysokość elementu) */
+    margin: 0; /* Removes default outer margin around elements (Usuwa domyślny zewnętrzny margines wokół elementów) */
+    padding: 0; /* Removes default inner padding inside elements (Usuwa domyślny wewnętrzny margines wewnątrz elementów) */
+}
+
+body { /* Styles the main body container of the webpage (Stylizuje główny kontener body strony internetowej) */
+    font-family: Arial, sans-serif; /* Sets a clean sans-serif font family for readability (Ustawia czysty krój pisma bezszeryfowego dla czytelności) */
+    background-color: #f4f6f9; /* Sets a soft light-gray background color for the page (Ustawia delikatny, jasnoszary kolor tła strony) */
+    color: #222222; /* Sets dark charcoal text color for strong contrast (Ustawia ciemny grafitowy kolor tekstu dla dobrego kontrastu) */
+    line-height: 1.5; /* Sets comfortable vertical spacing between lines of text (Ustawia wygodny odstęp pionowy między wierszami tekstu) */
+    padding: 30px 15px; /* Adds inner spacing around the page edges (Dodaje wewnętrzny odstęp wokół krawędzi strony) */
+}
+
+.container { /* Styles a centered wrapper class for main page content (Stylizuje wyśrodkowaną klasę opakowującą dla głównej treści strony) */
+    max-width: 750px; /* Limits maximum width so lines stay easy to read on wide screens (Ogranicza maksymalną szerokość, aby linie były łatwe do czytania na szerokich ekranach) */
+    margin: 0 auto; /* Centers the container horizontally on the screen (Centruje kontener w poziomie na ekranie) */
+    background-color: #ffffff; /* Sets a crisp white background for the main card/box (Ustawia czyste białe tło dla głównego pudełka/karty) */
+    padding: 25px 30px; /* Adds comfortable inner padding inside the box (Dodaje wygodny wewnętrzny margines wewnątrz pudełka) */
+    border-radius: 10px; /* Rounds the corners of the container box (Zaokrągla rogi pudełka kontenera) */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Adds a subtle drop shadow for depth (Dodaje subtelny cień dla głębi) */
+}
+
+h1 { /* Styles main page headings (Stylizuje główne nagłówki strony) */
+    margin-bottom: 20px; /* Adds space below the heading (Dodaje odstęp pod nagłówkiem) */
+    color: #1e293b; /* Sets a deep slate-blue color for headings (Ustawia głęboki łupkowo-niebieski kolor dla nagłówków) */
+}
+
+.btn { /* Base styles for buttons and button-like links (Podstawowe style dla przycisków i linków wyglądających jak przyciski) */
+    display: inline-block; /* Allows setting width/height and margins while staying inline with text (Pozwala ustawić szerokość/wysokość i marginesy, pozostając w linii z tekstem) */
+    text-decoration: none; /* Removes default underline from links (Usuwa domyślne podkreślenie z linków) */
+    padding: 8px 14px; /* Adds vertical and horizontal inner padding to buttons (Dodaje pionowy i poziomy margines wewnętrzny do przycisków) */
+    border-radius: 6px; /* Rounds the corners of buttons (Zaokrągla rogi przycisków) */
+    font-size: 14px; /* Sets readable button font size (Ustawia czytelny rozmiar czcionki przycisku) */
+    font-weight: bold; /* Makes button text bold (Pogrubia tekst przycisku) */
+    border: none; /* Removes default browser button border (Usuwa domyślne obramowanie przycisku przeglądarki) */
+    cursor: pointer; /* Changes mouse cursor to a pointing hand on hover (Zmienia kursor myszy na łapkę po najechaniu) */
+}
+
+.btn-primary { /* Styles primary action buttons like Add or Save (Stylizuje główne przyciski akcji, takie jak Dodaj lub Zapisz) */
+    background-color: #2563eb; /* Sets a vibrant blue background color (Ustawia żywy niebieski kolor tła) */
+    color: #ffffff; /* Sets white text color for contrast (Ustawia biały kolor tekstu dla kontrastu) */
+}
+
+.btn-primary:hover { /* Styles primary button when hovered with mouse (Stylizuje główny przycisk po najechaniu myszką) */
+    background-color: #1d4ed8; /* Darkens the blue shade slightly on hover (Lekko przyciemnia odcień niebieskiego po najechaniu) */
+}
+
+.btn-secondary { /* Styles secondary action links like Edit or Cancel (Stylizuje drugorzędne linki akcji, takie jak Edytuj lub Anuluj) */
+    background-color: #e2e8f0; /* Sets a soft gray background color (Ustawia delikatny szary kolor tła) */
+    color: #1e293b; /* Sets dark text color (Ustawia ciemny kolor tekstu) */
+}
+
+.btn-secondary:hover { /* Styles secondary button on hover (Stylizuje drugorzędny przycisk po najechaniu myszką) */
+    background-color: #cbd5e1; /* Darkens the gray shade slightly on hover (Lekko przyciemnia odcień szarości po najechaniu) */
+}
+
+.btn-danger { /* Styles destructive action buttons like Delete (Stylizuje przyciski ryzykownych akcji, takie jak Usuń) */
+    background-color: #dc2626; /* Sets a strong red background color (Ustawia mocny czerwony kolor tła) */
+    color: #ffffff; /* Sets white text color (Ustawia biały kolor tekstu) */
+}
+
+.btn-danger:hover { /* Styles danger button on hover (Stylizuje przycisk ostrzegawczy po najechaniu myszką) */
+    background-color: #b91c1c; /* Darkens the red shade slightly on hover (Lekko przyciemnia odcień czerwieni po najechaniu) */
+}
+
+.word-list { /* Styles the list container for flashcards (Stylizuje kontener listy dla fiszek) */
+    list-style: none; /* Removes default bullet points from the list (Usuwa domyślne kropki wypunktowania z listy) */
+    margin-top: 20px; /* Adds space above the flashcard list (Dodaje odstęp nad listą fiszek) */
+}
+
+.word-card { /* Styles each individual flashcard row (Stylizuje każdy pojedynczy wiersz fiszki) */
+    display: flex; /* Uses Flexbox to align word text on the left and buttons on the right (Używa Flexboxa, aby wyrównać tekst słówka po lewej i przyciski po prawej) */
+    justify-content: space-between; /* Pushes left and right items to opposite edges of the card (Wypycha lewe i prawe elementy do przeciwnych krawędzi karty) */
+    align-items: center; /* Vertically centers items inside the card (Centruje elementy w pionie wewnątrz karty) */
+    background-color: #f8fafc; /* Sets a subtle off-white background for each card (Ustawia delikatne, złamane białe tło dla każdej karty) */
+    border: 1px solid #e2e8f0; /* Adds a thin light-gray border around the card (Dodaje cienkie, jasnoszare obramowanie wokół karty) */
+    border-radius: 8px; /* Rounds the corners of each flashcard (Zaokrągla rogi każdej fiszki) */
+    padding: 14px 18px; /* Adds inner spacing inside each flashcard (Dodaje wewnętrzny odstęp wewnątrz każdej fiszki) */
+    margin-bottom: 12px; /* Adds spacing between consecutive flashcards (Dodaje odstęp między kolejnymi fiszkami) */
+}
+
+.language-badge { /* Styles the small tag showing the language name (Stylizuje mały znacznik pokazujący nazwę języka) */
+    background-color: #dbeafe; /* Sets a light blue badge background (Ustawia jasnoniebieskie tło znacznika) */
+    color: #1e40af; /* Sets dark blue text color for the badge (Ustawia ciemnoniebieski kolor tekstu dla znacznika) */
+    padding: 2px 8px; /* Adds small inner padding inside the badge (Dodaje mały margines wewnętrzny wewnątrz znacznika) */
+    border-radius: 12px; /* Makes the badge pill-shaped (Nadaje znacznikowi kształt pastylki) */
+    font-size: 12px; /* Sets smaller tag text size (Ustawia mniejszy rozmiar tekstu znacznika) */
+    margin-left: 6px; /* Adds slight space before the badge (Dodaje lekki odstęp przed znacznikiem) */
+}
+
+.actions { /* Groups Edit and Delete buttons together (Grupuje razem przyciski Edytuj i Usuń) */
+    display: flex; /* Aligns action buttons horizontally in a row (Wyrównuje przyciski akcji w poziomie w jednym rzędzie) */
+    gap: 8px; /* Adds consistent spacing between action buttons (Dodaje stały odstęp między przyciskami akcji) */
+}
+
+form p { /* Styles each paragraph generated by {{ form.as_p }} (Stylizuje każdy akapit wygenerowany przez {{ form.as_p }}) */
+    margin-bottom: 15px; /* Adds vertical space between form fields (Dodaje pionowy odstęp między polami formularza) */
+}
+
+form label { /* Styles labels above or beside form inputs (Stylizuje etykiety nad lub obok pól formularza) */
+    display: block; /* Places the label on its own line above the input field (Umieszcza etykietę w osobnej linii nad polem wprowadzania) */
+    font-weight: bold; /* Makes field labels bold (Pogrubia etykiety pól) */
+    margin-bottom: 6px; /* Adds space between label and input box (Dodaje odstęp między etykietą a polem wprowadzania) */
+}
+
+form input, form select { /* Styles text inputs and dropdown fields inside forms (Stylizuje pola tekstowe i listy rozwijane wewnątrz formularzy) */
+    width: 100%; /* Makes inputs stretch across the full container width (Rozciąga pola na pełną szerokość kontenera) */
+    padding: 10px 12px; /* Adds comfortable inner padding inside input boxes (Dodaje wygodny margines wewnętrzny wewnątrz pól) */
+    border: 1px solid #cbd5e1; /* Adds a clean gray border around input fields (Dodaje czyste, szare obramowanie wokół pól) */
+    border-radius: 6px; /* Rounds the corners of input boxes (Zaokrągla rogi pól) */
+    font-size: 15px; /* Sets comfortable typing text size (Ustawia wygodny rozmiar tekstu do pisania) */
 }
