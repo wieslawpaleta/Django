@@ -1,23 +1,33 @@
-<!DOCTYPE html> <!-- Declares the document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
-<html lang="en"> <!-- Opens the HTML root element with English language attribute (Otwiera główny element HTML z atrybutem języka angielskiego) -->
+{% load static %} <!-- Loads Django's static template tag library so we can reference CSS/JS/image files (Ładuje bibliotekę tagów szablonu static w Django, aby móc odwoływać się do plików CSS/JS/obrazów) -->
+<!DOCTYPE html> <!-- Declares document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
+<html lang="en"> <!-- Opens HTML root element (Otwiera główny element HTML) -->
 <head>
-    <meta charset="UTF-8"> <!-- Sets character encoding to UTF-8 for special characters (Ustawia kodowanie znaków na UTF-8 dla znaków specjalnych) -->
-    <title>LinguaCards - Vocabulary List</title> <!-- Sets the title of the webpage shown in the browser tab (Ustawia tytuł strony internetowej widoczny w karcie przeglądarki) -->
+    <meta charset="UTF-8"> <!-- Sets UTF-8 character encoding (Ustawia kodowanie znaków UTF-8) -->
+    <title>LinguaCards - Vocabulary List</title> <!-- Sets browser tab title (Ustawia tytuł karty przeglądarki) -->
+    <link rel="stylesheet" href="{% static 'vocabulary/style.css' %}"> <!-- Links our external CSS file using Django's static tag (Podpina nasz zewnętrzny plik CSS za pomocą tagu static z Django) -->
 </head>
 <body>
-    <h1>My Flashcards</h1> <!-- Main heading of the webpage (Główny nagłówek strony internetowej) -->
-    
-    <a href="{% url 'add_word' %}">Add New Word</a> <!-- Link that dynamically generates URL for the add_word view page (Link, który dynamicznie generuje adres URL dla strony widoku add_word) -->
-    <br><br>
+    <div class="container"> <!-- Centers and styles the main page box (Centruje i stylizuje główne pudełko strony) -->
+        <h1>My Flashcards</h1> <!-- Main page heading (Główny nagłówek strony) -->
 
-    <ul> <!-- Opens an unordered list container (Otwiera kontener listy wypunktowanej) -->
-        {% for word in words %} <!-- Django template loop that iterates over each word in the words list (Pętla szablonu Django, która iteruje po każdym słowie z listy words) -->
-            <li>
-                <strong>{{ word.foreign_word }}</strong> - {{ word.translation }} ({{ word.language }})</li> <!-- List item displaying foreign word, translation, and language (Element listy wyświetlający obce słowo, tłumaczenie i język) -->
-                <a href="{% url 'update_word' word.pk %}">Edit</a> <!-- Link pointing to update view for this specific word using its primary key (Link wskazujący na widok aktualizacji dla tego konkretnego słówka przy użyciu jego klucza głównego) --> 
-                <a href="{% url 'delete_word' word.pk %}" style="color: red;">Delete</a> <!-- Link pointing to delete confirmation view for this specific word (Link wskazujący na widok potwierdzenia usunięcia dla tego konkretnego słówka) -->       {% empty %} <!-- Fallback block if the words list is empty (Blok zastępczy, jeśli lista słów jest pusta) -->
-            <p>No words added yet. Go to admin to add some!</p> <!-- Message displayed when no words exist in database (Komunikat wyświetlany, gdy w bazie danych nie ma żadnych słów) -->
-        {% endfor %} <!-- Closes the Django template for loop (Zamyka pętlę for szablonu Django) -->
-    </ul> <!-- Closes the unordered list (Zamyka listę wypunktowaną) -->
+        <a href="{% url 'add_word' %}" class="btn btn-primary">+ Add New Word</a> <!-- Primary button linking to the add word page (Główny przycisk prowadzący do strony dodawania słówka) -->
+
+        <ul class="word-list"> <!-- Styled list container without bullets (Ostylowany kontener listy bez kropek) -->
+            {% for word in words %} <!-- Loops through each word object from the database (Iteruje po każdym obiekcie słówka z bazy danych) -->
+                <li class="word-card"> <!-- Styled flashcard row container (Ostylowany kontener wiersza fiszki) -->
+                    <div> <!-- Left side container for word text and badge (Lewy kontener na tekst słówka i znacznik) -->
+                        <strong>{{ word.foreign_word }}</strong> - {{ word.translation }} <!-- Displays foreign word and its translation (Wyświetla obce słowo i jego tłumaczenie) -->
+                        <span class="language-badge">{{ word.language }}</span> <!-- Displays language name inside a pill badge (Wyświetla nazwę języka wewnątrz znacznika-pastylki) -->
+                    </div> <!-- Closes left side container (Zamyka lewy kontener) -->
+                    <div class="actions"> <!-- Right side container for action buttons (Prawy kontener na przyciski akcji) -->
+                        <a href="{% url 'update_word' word.pk %}" class="btn btn-secondary">Edit</a> <!-- Secondary button to edit this word (Drugorzędny przycisk do edycji tego słówka) -->
+                        <a href="{% url 'delete_word' word.pk %}" class="btn btn-danger">Delete</a> <!-- Danger button to delete this word (Przycisk ostrzegawczy do usunięcia tego słówka) -->
+                    </div> <!-- Closes actions container (Zamyka kontener akcji) -->
+                </li> <!-- Closes flashcard row (Zamyka wiersz fiszki) -->
+            {% empty %} <!-- Fallback shown when there are no words in the database (Widok zastępczy pokazywany, gdy w bazie nie ma żadnych słówek) -->
+                <p>No words added yet. Click "+ Add New Word" to create your first flashcard!</p> <!-- Friendly empty list message (Przyjazny komunikat o pustej liście) -->
+            {% endfor %} <!-- Closes for loop (Zamyka pętlę for) -->
+        </ul> <!-- Closes word list (Zamyka listę słówek) -->
+    </div> <!-- Closes container box (Zamyka pudełko kontenera) -->
 </body>
-</html> <!-- Closes the HTML document (Zamyka dokument HTML) -->
+</html> <!-- Closes HTML document (Zamyka dokument HTML) -->

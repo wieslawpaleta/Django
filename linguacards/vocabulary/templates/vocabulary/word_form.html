@@ -1,20 +1,23 @@
+{% load static %} <!-- Loads Django static tag library (Ładuje bibliotekę tagów static w Django) -->
 <!DOCTYPE html> <!-- Declares document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
-<html lang="en"> <!-- Opens HTML root element with English language attribute (Otwiera główny element HTML z atrybutem języka angielskiego) -->
+<html lang="en"> <!-- Opens HTML root element (Otwiera główny element HTML) -->
 <head>
-    <meta charset="UTF-8"> <!-- Sets character encoding to UTF-8 (Ustawia kodowanie znaków na UTF-8) -->
-    <title>Add New Word</title> <!-- Sets browser tab title (Ustawia tytuł karty przeglądarki) -->
+    <meta charset="UTF-8"> <!-- Sets UTF-8 encoding (Ustawia kodowanie znaków UTF-8) -->
+    <title>{% if word %}Edit Word{% else %}Add New Word{% endif %}</title> <!-- Dynamically sets page title based on whether we are editing an existing word or adding a new one (Dynamicznie ustawia tytuł strony w zależności od tego, czy edytujemy istniejące słowo, czy dodajemy nowe) -->
+    <link rel="stylesheet" href="{% static 'vocabulary/style.css' %}"> <!-- Links our CSS stylesheet (Podpina nasz arkusz stylów CSS) -->
 </head>
 <body>
-    <h1>Add a New Flashcard</h1> <!-- Main heading of the page (Główny nagłówek strony) -->
-    
-    <form method="POST"> <!-- Opens an HTML form that sends data using the POST method (Otwiera formularz HTML, który wysyła dane metodą POST) -->
-        {% csrf_token %} <!-- Security token required by Django for all POST forms to prevent cross-site request forgery attacks (Token bezpieczeństwa wymagany przez Django dla wszystkich formularzy POST w celu zapobiegania atakom fałszowania żądań międzywitrynowych) -->
-        {{ form.as_p }} <!-- Renders all form fields automatically wrapped inside HTML paragraph tags (Renderuje wszystkie pola formularza automatycznie owinięte w znaczniki akapitu HTML) -->
-        <button type="submit">Save Word</button> <!-- Submit button that sends the filled form data to the server (Przycisk wysyłania, który wysyła wypełnione dane formularza do serwera) -->
-    </form> <!-- Closes the HTML form element (Zamyka element formularza HTML) -->
-    
-    <br> <!-- Inserts a vertical line break space (Wstawia pionowy odstęp łamania linii) -->
-    <a href="{% url 'word_list' %}">Back to List</a> <!-- Link that dynamically generates URL back to the main word list page (Link, który dynamicznie generuje adres URL z powrotem do głównej strony listy słówek) -->
-</body>
+    <div class="container"> <!-- Centered card container (Wyśrodkowany kontener karty) -->
+        <h1>{% if word %}Edit Flashcard{% else %}Add a New Flashcard{% endif %}</h1> <!-- Shows Edit heading if word exists, otherwise Add heading (Pokazuje nagłówek Edycji, jeśli słówko istnieje, w przeciwnym razie nagłówek Dodawania) -->
 
-</html>
+        <form method="POST"> <!-- Form sending data via POST method (Formularz wysyłający dane metodą POST) -->
+            {% csrf_token %} <!-- Django CSRF protection token (Token ochrony CSRF w Django) -->
+            {{ form.as_p }} <!-- Renders form fields wrapped in paragraphs (Renderuje pola formularza opakowane w akapity) -->
+            <div class="actions"> <!-- Groups submit and cancel buttons neatly (Grupuje przyciski zapisu i anulowania) -->
+                <button type="submit" class="btn btn-primary">{% if word %}Save Changes{% else %}Save Word{% endif %}</button> <!-- Submit button with dynamic label (Przycisk wysyłania z dynamiczną etykietą) -->
+                <a href="{% url 'word_list' %}" class="btn btn-secondary">Back to List</a> <!-- Cancel/back button returning to word list (Przycisk powrotu/anulowania wracający do listy słówek) -->
+            </div> <!-- Closes actions group (Zamyka grupę akcji) -->
+        </form> <!-- Closes form element (Zamyka element formularza) -->
+    </div> <!-- Closes container box (Zamyka pudełko kontenera) -->
+</body>
+</html> <!-- Closes HTML document (Zamyka dokument HTML) -->
