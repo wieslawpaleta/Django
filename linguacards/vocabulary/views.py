@@ -1,3 +1,4 @@
+import random # Imports Python's built-in random module so we can pick random flashcards (Importuje wbudowany moduł random z Pythona, aby móc losować fiszki)
 from django.shortcuts import render, redirect, get_object_or_404  # Imports get_object_or_404 to fetch a database item or return an HTTP 404 error if it does not exist (Importuje get_object_or_404 do pobrania elementu bazy danych lub zwrócenia błędu HTTP 404, jeśli nie istnieje)
 from .models import Word  # Imports our Word model (Importuje nasz model Word)
 from .forms import WordForm  # Imports our WordForm class (Importuje naszą klasę WordForm)
@@ -40,3 +41,6 @@ def delete_word(view_request, word_pk):  # Defines a view function to delete a w
     
     context_dictionary = {'word': word_item}  # Packs word item into context for confirmation display (Pakuje element słówka do kontekstu w celu wyświetlenia potwierdzenia)
     return render(view_request, 'vocabulary/word_confirm_delete.html', context_dictionary)  # Renders the delete confirmation HTML template (Renderuje szablon HTML potwierdzenia usunięcia)
+
+def study_mode(view_request): # Defines a new view function named study_mode for practicing flashcards (Definiuje nową funkcję widoku o nazwie study_mode do ćwiczenia fiszek)
+    words_list = list(Word.objects.all()) # Converts the database QuerySet into a Python list 
