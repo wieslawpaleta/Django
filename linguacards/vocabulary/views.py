@@ -42,5 +42,8 @@ def delete_word(view_request, word_pk):  # Defines a view function to delete a w
     context_dictionary = {'word': word_item}  # Packs word item into context for confirmation display (Pakuje element słówka do kontekstu w celu wyświetlenia potwierdzenia)
     return render(view_request, 'vocabulary/word_confirm_delete.html', context_dictionary)  # Renders the delete confirmation HTML template (Renderuje szablon HTML potwierdzenia usunięcia)
 
-def study_mode(view_request): # Defines a new view function named study_mode for practicing flashcards (Definiuje nową funkcję widoku o nazwie study_mode do ćwiczenia fiszek)
-    words_list = list(Word.objects.all()) # Converts the database QuerySet into a Python list 
+def study_mode(view_request):  # Defines a new view function named study_mode for practicing flashcards (Definiuje nową funkcję widoku o nazwie study_mode do ćwiczenia fiszek)
+    words_list = list(Word.objects.all())  # Converts the database QuerySet into a Python list so random.choice() can pick from it (Konwertuje QuerySet z bazy danych na zwykłą listę Pythona, aby random.choice() mogło z niej losować)
+    random_word = random.choice(words_list) if words_list else None  # Picks one random word if the list is not empty, otherwise sets None (Losuje jedno słowo, jeśli lista nie jest pusta, w przeciwnym razie ustawia None)
+    context_dictionary = {'word': random_word}  # Packs the selected random word into the context dictionary (Pakuje wylosowane słowo do słownika kontekstu)
+    return render(view_request, 'vocabulary/study_mode.html', context_dictionary)  # Renders the study_mode HTML template and returns the response (Renderuje szablon HTML study_mode i zwraca odpowiedź)
