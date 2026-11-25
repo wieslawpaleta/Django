@@ -1,10 +1,29 @@
 import random # Imports Python's built-in random module so we can pick random flashcards (Importuje wbudowany moduł random z Pythona, aby móc losować fiszki)
+from django.db.models import Q 
 from django.shortcuts import render, redirect, get_object_or_404  # Imports get_object_or_404 to fetch a database item or return an HTTP 404 error if it does not exist (Importuje get_object_or_404 do pobrania elementu bazy danych lub zwrócenia błędu HTTP 404, jeśli nie istnieje)
 from .models import Word  # Imports our Word model (Importuje nasz model Word)
 from .forms import WordForm  # Imports our WordForm class (Importuje naszą klasę WordForm)
 
 def word_list(view_request):  # Defines the list view function (Definiuje funkcję widoku listy)
-    all_words = Word.objects.all()  # Fetches all words from database (Pobiera wszystkie słówka z bazy danych)
+    search_query = view_request.GET.get('search', '').strip()
+    selected_language = view_request.GET.get('language', '').strip()
+    
+    words_queryset = Word.objects.all()  # Fetches all words from database (Pobiera wszystkie słówka z bazy danych)
+
+    if search_query:
+        words_queryset = words_queryset.filter(
+            Q(foreign_word__icontains=search_query) | Q(translation__icontains=search_query)
+        )
+
+    if selected_language:
+        words_queryset = words_queryset.filter(language__iexact=selected_language)
+
+    available_languages = (
+        Word.objects.order_by('language')
+        .values_list('language', flat=True)
+        .distinct()
+    )
+    
     context_dictionary = {'words': all_words}  # Packs words into context dictionary (Pakuje słówka do słownika kontekstu)
     return render(view_request, 'vocabulary/word_list.html', context_dictionary)  # Renders word list template (Renderuje szablon listy słówek)
 

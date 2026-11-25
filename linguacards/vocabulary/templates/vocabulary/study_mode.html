@@ -1,9 +1,41 @@
 {% load static %} <!-- Loads Django static tag library (Ładuje bibliotekę tagów static w Django) -->
-<!DOCTYPE html> <!-- Declares document type as HTML5 (Deklaruje typ dokumentu jako HTML5 ) -->
+<!DOCTYPE html> <!-- Declares document type as HTML5 (Deklaruje typ dokumentu jako HTML5) -->
 <html lang="en"> <!-- Opens HTML root element (Otwiera główny element HTML) -->
 <head>
     <meta charset="UTF-8"> <!-- Sets UTF-8 encoding (Ustawia kodowanie znaków UTF-8) -->
     <title>LinguaCards - Study Mode</title> <!-- Sets browser tab title (Ustawia tytuł karty przeglądarki) -->
-    <link rel="stylesheet" href="{% static 'vocabulary/style.css' %}">  <!-- Links our CSS stylesheet (Podpina nasz arkusz stylów CSS) -->
+    <link rel="stylesheet" href="{% static 'vocabulary/style.css' %}"> <!-- Links our CSS stylesheet (Podpina nasz arkusz stylów CSS) -->
 </head>
-</html>
+<body>
+    <div class="container"> <!-- Centered main container (Wyśrodkowany główny kontener) -->
+        <h1>Flashcard Study Mode</h1> <!-- Page heading (Nagłówek strony) -->
+
+        {% if word %} <!-- Checks if a random word was found in the database (Sprawdza, czy znaleziono losowe słowo w bazie danych) -->
+            <div class="word-card" style="flex-direction: column; align-items: flex-start; gap: 12px;"> <!-- Displays the flashcard box vertically (Wyświetla pudełko fiszki w układzie pionowym) -->
+                <span class="language-badge" style="margin-left: 0;">{{ word.language }}</span> <!-- Shows the language badge for the current card (Pokazuje znacznik języka dla bieżącej karty) -->
+                <h2 id="foreign-word">{{ word.foreign_word }}</h2> <!-- Displays the foreign word to guess (Wyświetla obce słowo do odgadnięcia) -->
+                <p id="translation-box" style="display: none; font-size: 18px; color: #1e40af;"> <!-- Hidden translation element that is revealed when clicked (Ukryty element tłumaczenia, który odkrywa się po kliknięciu) -->
+                    <strong>Translation:</strong> {{ word.translation }} <!-- Displays the translation text (Wyświetla tekst tłumaczenia) -->
+                </p> <!-- Closes translation paragraph (Zamyka akapit tłumaczenia) -->
+            </div> <!-- Closes flashcard box (Zamyka pudełko fiszki) -->
+
+            <div class="actions" style="margin-top: 15px;"> <!-- Container for study control buttons (Kontener na przyciski sterowania nauką) -->
+                <button type="button" class="btn btn-primary" onclick="revealTranslation()">Show Translation</button> <!-- Button that calls JavaScript function to show the translation (Przycisk wywołujący funkcję JavaScript, aby pokazać tłumaczenie) -->
+                <a href="{% url 'study_mode' %}" class="btn btn-secondary">Next Random Word</a> <!-- Reloads study_mode view to pick a new random word (Przeładowuje widok study_mode, aby wylosować nowe słowo) -->
+                <a href="{% url 'word_list' %}" class="btn btn-secondary">Back to List</a> <!-- Returns to main word list (Wraca do głównej listy słówek) -->
+            </div> <!-- Closes button actions container (Zamyka kontener przycisków akcji) -->
+        {% else %} <!-- Executes when there are no words in the database yet (Wykonuje się, gdy w bazie nie ma jeszcze żadnych słów) -->
+            <p style="margin-bottom: 20px;">No words in your vocabulary yet. Add some words first to start studying!</p> <!-- Message telling user to add words first (Komunikat informujący, że najpierw trzeba dodać słówka) -->
+            <a href="{% url 'add_word' %}" class="btn btn-primary">+ Add New Word</a> <!-- Link button to add a word (Przycisk linku do dodania słówka) -->
+            <a href="{% url 'word_list' %}" class="btn btn-secondary">Back to List</a> <!-- Link button to return to list (Przycisk linku do powrotu do listy) -->
+        {% endif %} <!-- Closes if/else block (Zamyka blok if/else) -->
+    </div> <!-- Closes container box (Zamyka pudełko kontenera) -->
+
+    <script> <!-- Opens inline JavaScript block (Otwiera blok JavaScript w szablonie) -->
+        function revealTranslation() { /* Defines function to reveal the hidden translation text (Definiuje funkcję odkrywającą ukryty tekst tłumaczenia) */
+            const box = document.getElementById('translation-box'); /* Finds the translation paragraph element by its ID (Znajduje element akapitu tłumaczenia po jego ID) */
+            box.style.display = 'block'; /* Changes display style from none to block so it becomes visible (Zmienia styl wyświetlania z none na block, aby stał się widoczny) */
+        } /* Closes revealTranslation function (Zamyka funkcję revealTranslation) */
+    </script> <!-- Closes JavaScript block (Zamyka blok JavaScript) -->
+</body>
+</html> <!-- Closes HTML document (Zamyka dokument HTML) -->
