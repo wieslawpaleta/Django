@@ -12,8 +12,22 @@
 
         <div class="actions"> <!-- Groups top navigation buttons horizontally (Grupuje górne przyciski nawigacji w poziomie) -->
             <a href="{% url 'add_word' %}" class="btn btn-primary">+ Add New Word</a> <!-- Button to open add word form (Przycisk otwierający formularz dodawania słówka) -->
-            <a href="{% url 'study_mode' %}" class="btn btn-secondary">Study Mode</a> <!-- Button to start random flashcard study mode (Przycisk uruchamiający tryb losowej nauki fiszek) -->
+            <a href="{% url 'study_mode' %}" class="btn btn-secondary">Study Mode</a> <!-- Button to open random study mode (Przycisk otwierający losowy tryb nauki) -->
         </div> <!-- Closes top actions container (Zamyka górny kontener akcji) -->
+
+        <form method="get" class="filter-form"> <!-- Form using GET method to filter words via URL parameters (Formularz używający metody GET do filtrowania słówek przez parametry URL) -->
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Search word or translation..."> <!-- Search input pre-filled with current search_query (Pole wyszukiwania wstępnie wypełnione bieżącym search_query) -->
+            <select name="language"> <!-- Dropdown menu for selecting a language filter (Menu rozwijane do wyboru filtra języka) -->
+                <option value="">All Languages</option> <!-- Default option that clears the language filter (Domyślna opcja czyszcząca filtr języka) -->
+                {% for lang in languages %} <!-- Loops through unique languages from the database (Iteruje po unikalnych językach z bazy danych) -->
+                    <option value="{{ lang }}" {% if lang == selected_language %}selected{% endif %}>{{ lang }}</option> <!-- Renders each language option and marks it selected if active (Renderuje każdą opcję języka i zaznacza ją jako wybraną, jeśli jest aktywna) -->
+                {% endfor %} <!-- Closes language loop (Zamyka pętlę języków) -->
+            </select> <!-- Closes language select dropdown (Zamyka listę rozwijaną języków) -->
+            <button type="submit" class="btn btn-primary">Filter</button> <!-- Submits the filter form (Wysyła formularz filtrowania) -->
+            {% if search_query or selected_language %} <!-- Shows Reset button only when a search or language filter is active (Pokazuje przycisk Resetuj tylko wtedy, gdy aktywne jest wyszukiwanie lub filtr języka) -->
+                <a href="{% url 'word_list' %}" class="btn btn-secondary">Reset</a> <!-- Clears active filters and shows all words (Czyści aktywne filtry i pokazuje wszystkie słówka) -->
+            {% endif %} <!-- Closes conditional Reset button (Zamyka warunkowy przycisk Resetuj) -->
+        </form> <!-- Closes filter form (Zamyka formularz filtrowania) -->
 
         <ul class="word-list"> <!-- List container for flashcards (Kontener listy fiszek) -->
             {% for word in words %} <!-- Loops through words from database (Iteruje po słowach z bazy danych) -->

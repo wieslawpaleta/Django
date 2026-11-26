@@ -4,28 +4,34 @@ from django.shortcuts import render, redirect, get_object_or_404  # Imports get_
 from .models import Word  # Imports our Word model (Importuje nasz model Word)
 from .forms import WordForm  # Imports our WordForm class (Importuje naszą klasę WordForm)
 
-def word_list(view_request):  # Defines the list view function (Definiuje funkcję widoku listy)
-    search_query = view_request.GET.get('search', '').strip()
-    selected_language = view_request.GET.get('language', '').strip()
-    
-    words_queryset = Word.objects.all()  # Fetches all words from database (Pobiera wszystkie słówka z bazy danych)
+def word_list(view_request):  # Defines the word list view function (Definiuje funkcję widoku listy słówek)
+    search_query = view_request.GET.get('search', '').strip()  # Gets 'search' query param from URL, defaults to empty string, and removes leading/trailing spaces (Pobiera parametr 'search' z URL, domyślnie pusty tekst i usuwa spacje na początku/końcu)
+    selected_language = view_request.GET.get('language', '').strip()  # Gets 'language' query param from URL, defaults to empty string (Pobiera parametr 'language' z URL, domyślnie pusty tekst)
 
-    if search_query:
-        words_queryset = words_queryset.filter(
-            Q(foreign_word__icontains=search_query) | Q(translation__icontains=search_query)
-        )
+    words_queryset = Word.objects.all()  # Starts with all Word records from the database (Zaczyna od wszystkich rekordów Word z bazy danych)
 
-    if selected_language:
-        words_queryset = words_queryset.filter(language__iexact=selected_language)
+    if search_query:  # Checks if the user entered any search text (Sprawdza, czy użytkownik wpisał jakikolwiek tekst do wyszukania)
+        words_queryset = words_queryset.filter(  # Filters the queryset to matching records (Filtruje zapytanie do pasujących rekordów)
+            Q(foreign_word__icontains=search_query) | Q(translation__icontains=search_query)  # Matches if search_query appears case-insensitively in foreign_word OR translation (Pasuje, jeśli search_query występuje bez względu na wielkość liter w foreign_word LUB translation)
+        )  # Closes filter call (Zamyka wywołanie filter)
 
-    available_languages = (
-        Word.objects.order_by('language')
-        .values_list('language', flat=True)
-        .distinct()
-    )
-    
-    context_dictionary = {'words': all_words}  # Packs words into context dictionary (Pakuje słówka do słownika kontekstu)
-    return render(view_request, 'vocabulary/word_list.html', context_dictionary)  # Renders word list template (Renderuje szablon listy słówek)
+    if selected_language:  # Checks if a specific language filter was selected (Sprawdza, czy wybrano konkretny filtr języka)
+        words_queryset = words_queryset.filter(language__iexact=selected_language)  # Filters words where language matches selected_language ignoring case (Filtruje słówka, których język zgadza się z selected_language bez względu na wielkość liter)
+
+    available_languages = (  # Prepares a sorted list of unique languages present in the database (Przygotowuje posortowaną listę unikalnych języków obecnych w bazie danych)
+        Word.objects.order_by('language')  # Sorts records alphabetically by language column (Sortuje rekordy alfabetycznie po kolumnie language)
+        .values_list('language', flat=True)  # Extracts only the 'language' column values as a flat list (Wyciąga tylko wartości kolumny 'language' jako płaską listę)
+        .distinct()  # Removes duplicate language names (Usuwa powtarzające się nazwy języków)
+    )  # Closes query chain (Zamyka łańcuch zapytania)
+
+    context_dictionary = {  # Creates context dictionary to pass data to the HTML template (Tworzy słownik kontekstu do przekazania danych do szablonu HTML)
+        'words': words_queryset,  # Filtered list of flashcards to display (Przefiltrowana lista fiszek do wyświetlenia)
+        'languages': available_languages,  # Unique languages for the dropdown filter (Unikalne języki do listy rozwijanej filtra)
+        'search_query': search_query,  # Keeps the searched text so it stays visible in the input box (Zachowuje wyszukany tekst, aby pozostał widoczny w polu wyszukiwania)
+        'selected_language': selected_language,  # Keeps the chosen language so the dropdown remembers it (Zachowuje wybrany język, aby lista rozwijana go pamiętała)
+    }  # Closes context dictionary (Zamyka słownik kontekstu)
+
+    return render(view_request, 'vocabulary/word_list.html', context_dictionary)  # Renders word_list.html with context data (Renderuje word_list.html z danymi kontekstu)
 
 def add_word(view_request):  # Defines the add word view function (Definiuje funkcję widoku dodawania słówka)
     if view_request.method == 'POST':  # Checks if form was submitted (Sprawdza, czy formularz został przesłany)

@@ -111,3 +111,22 @@ form input, form select { /* Styles text inputs and dropdown fields inside forms
     border-radius: 6px; /* Rounds the corners of input boxes (Zaokrągla rogi pól) */
     font-size: 15px; /* Sets comfortable typing text size (Ustawia wygodny rozmiar tekstu do pisania) */
 }
+
+CSS
+.filter-form { /* Styles the search and language filter bar form (Stylizuje formularz paska wyszukiwania i filtrowania po języku) */
+    display: flex; /* Arranges filter controls horizontally in one row (Układa elementy filtra w poziomie w jednym rzędzie) */
+    flex-wrap: wrap; /* Wraps items onto a new line on narrow screens (Zawija elementy do nowej linii na węższych ekranach) */
+    gap: 10px; /* Adds even spacing between inputs and buttons (Dodaje równy odstęp między polami i przyciskami) */
+    margin-top: 18px; /* Adds space below the top navigation buttons (Dodaje odstęp pod górnymi przyciskami nawigacji) */
+    align-items: center; /* Vertically aligns all controls in the filter bar (Wyrównuje w pionie wszystkie elementy w pasku filtra) */
+}
+
+.filter-form input[type="text"], /* Targets the text search box inside the filter form (Wybiera pole tekstowe wyszukiwania wewnątrz formularza filtra) */
+.filter-form select { /* Targets the language dropdown inside the filter form (Wybiera listę rozwijaną języków wewnątrz formularza filtra) */
+    flex: 1; /* Allows inputs to grow and fill available horizontal space (Pozwala polom rosnąć i wypełnić dostępną przestrzeń w poziomie) */
+    min-width: 160px; /* Prevents inputs from shrinking too small on mobile screens (Zapobiega zbyt mocnemu kurczeniu się pól na ekranach telefonów) */
+    padding: 8px 12px; /* Sets comfortable inner padding inside filter controls (Ustawia wygodny margines wewnętrzny wewnątrz elementów filtra) */
+    border: 1px solid #cbd5e1; /* Adds a clean light-gray border (Dodaje czyste, jasnoszare obramowanie) */
+    border-radius: 6px; /* Rounds corners to match buttons and cards (Zaokrągla rogi, aby pasowały do przycisków i kart) */
+    font-size: 14px; /* Sets consistent control font size (Ustawia spójny rozmiar czcionki elementów) */
+}
