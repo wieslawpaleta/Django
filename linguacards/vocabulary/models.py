@@ -4,6 +4,7 @@ class Word(models.Model):  # Defines a new database table class named Word that 
     foreign_word = models.CharField(max_length=100)  # Creates a text column for the foreign word, allowing up to 100 characters (Tworzy kolumnę tekstową na obce słowo, pozwalającą na maksymalnie 100 znaków)
     translation = models.CharField(max_length=100)  # Creates a text column for the native translation, allowing up to 100 characters (Tworzy kolumnę tekstową na tłumaczenie ojczyste, pozwalającą na maksymalnie 100 znaków)
     language = models.CharField(max_length=50)  # Creates a text column for the language name (e.g., Spanish, German), up to 50 characters (Tworzy kolumnę tekstową na nazwę języka np. hiszpański, niemiecki, do 50 znaków)
+    is_learned = models.BooleanField(default=False) # Stores whether the word is learned (True/False), defaulting to False for new words (Przechowuje informację, czy słowo jest nauczone True/False, domyślnie False dla nowych słów)
     created_at = models.DateTimeField(auto_now_add=True)  # Creates a date/time column that automatically records when the word was created (Tworzy kolumnę daty/czasu, która automatycznie zapisuje moment utworzenia słówka)
 
     def __str__(self):  # Defines a special Python method to determine how a single Word object is displayed as text (Definiuje specjalną metodę Pythona określającą, jak pojedynczy obiekt Word jest wyświetlany jako tekst)

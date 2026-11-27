@@ -72,3 +72,10 @@ def study_mode(view_request):  # Defines a new view function named study_mode fo
     random_word = random.choice(words_list) if words_list else None  # Picks one random word if the list is not empty, otherwise sets None (Losuje jedno słowo, jeśli lista nie jest pusta, w przeciwnym razie ustawia None)
     context_dictionary = {'word': random_word}  # Packs the selected random word into the context dictionary (Pakuje wylosowane słowo do słownika kontekstu)
     return render(view_request, 'vocabulary/study_mode.html', context_dictionary)  # Renders the study_mode HTML template and returns the response (Renderuje szablon HTML study_mode i zwraca odpowiedź)
+
+def toggle_learned(view_request, word_pk):  # Defines view function to flip the is_learned status of a single word (Definiuje funkcję widoku do przełączania statusu is_learned pojedynczego słówka)
+    word_item = get_object_or_404(Word, pk=word_pk)  # Fetches the word by primary key or returns a 404 page if not found (Pobiera słowo po kluczu głównym lub zwraca stronę 404, jeśli nie znaleziono)
+    if view_request.method == 'POST':  # Ensures status changes are sent via POST request for safety (Zapewnia, że zmiany statusu są wysyłane przez żądanie POST dla bezpieczeństwa)
+        word_item.is_learned = not word_item.is_learned  # Flips boolean value: True becomes False and False becomes True (Odwraca wartość logiczną: True staje się False, a False staje się True)
+        word_item.save()  # Saves the updated is_learned value to the database (Zapisuje zaktualizowaną wartość is_learned w bazie danych)
+    return redirect('word_list')  # Redirects user back to the main word list page (Przekierowuje użytkownika z powrotem na główną stronę listy słówek)
