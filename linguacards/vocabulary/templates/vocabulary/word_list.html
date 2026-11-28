@@ -31,12 +31,18 @@
 
         <ul class="word-list"> <!-- List container for flashcards (Kontener listy fiszek) -->
             {% for word in words %} <!-- Loops through words from database (Iteruje po słowach z bazy danych) -->
-                <li class="word-card"> <!-- Individual flashcard card (Pojedyncza karta fiszki) -->
+                <li class="word-card {% if word.is_learned %}learned{% endif %}"> <!-- Individual flashcard card (Pojedyncza karta fiszki) -->
                     <div> <!-- Left side text container (Lewy kontener tekstu) -->
                         <strong>{{ word.foreign_word }}</strong> - {{ word.translation }} <!-- Displays word and translation (Wyświetla słowo i tłumaczenie) -->
                         <span class="language-badge">{{ word.language }}</span> <!-- Displays language badge (Wyświetla znacznik języka) -->
+                        {% if word.is_learned %}
+                            <span class="learned-badge">Learned</span>
+                        {% endif %}
                     </div> <!-- Closes left side container (Zamyka lewy kontener) -->
                     <div class="actions"> <!-- Right side action buttons (Przyciski akcji po prawej stronie) -->
+                        <form method="post" action="{% url 'toggle_learned' word.pk %}" class="inline-form">
+                            
+                        </form>
                         <a href="{% url 'update_word' word.pk %}" class="btn btn-secondary">Edit</a> <!-- Edit button (Przycisk edycji) -->
                         <a href="{% url 'delete_word' word.pk %}" class="btn btn-danger">Delete</a> <!-- Delete button (Przycisk usuwania) -->
                     </div> <!-- Closes actions container (Zamyka kontener akcji) -->

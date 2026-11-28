@@ -130,3 +130,21 @@ CSS
     border-radius: 6px; /* Rounds corners to match buttons and cards (Zaokrągla rogi, aby pasowały do przycisków i kart) */
     font-size: 14px; /* Sets consistent control font size (Ustawia spójny rozmiar czcionki elementów) */
 }
+
+.word-card.learned { /* Styles flashcard rows where the word is marked as learned (Stylizuje wiersze fiszek, gdzie słowo jest oznaczone jako nauczone) */
+    background-color: #f0fdf4; /* Sets a soft mint-green background for mastered words (Ustawia delikatne miętowo-zielone tło dla opanowanych słówek) */
+    border-color: #86efac; /* Sets a light green border around mastered flashcards (Ustawia jasnoszare/zielone obramowanie wokół opanowanych fiszek) */
+}
+
+.learned-badge { /* Styles the green status badge shown on learned flashcards (Stylizuje zieloną plakietkę statusu pokazywaną na nauczonych fiszkach) */
+    background-color: #dcfce7; /* Sets light green badge background (Ustawia jasnozielone tło plakietki) */
+    color: #166534; /* Sets dark green badge text for readability (Ustawia ciemnozielony tekst plakietki dla czytelności) */
+    padding: 2px 8px; /* Adds inner spacing inside the badge (Dodaje margines wewnętrzny wewnątrz plakietki) */
+    border-radius: 12px; /* Rounds badge edges into a pill shape (Zaokrągla krawędzie plakietki w kształt pastylki) */
+    font-size: 12px; /* Sets compact badge font size (Ustawia kompaktowy rozmiar czcionki plakietki) */
+    margin-left: 6px; /* Adds spacing before the learned badge (Dodaje odstęp przed plakietką learned) */
+}
+
+.inline-form { /* Keeps small action forms like the toggle button aligned inline (Utrzymuje małe formularze akcji, np. przycisk przełączania, w jednej linii) */
+    display: inline; /* Displays the form inline with sibling buttons (Wyświetla formularz w jednej linii z sąsiednimi przyciskami) */
+}
